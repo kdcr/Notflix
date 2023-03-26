@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import DetailView from './components/views/detailView';
 import ExploreView from './components/views/exploreView';
+import { store } from './redux/store';
 
 const App = () => {
   const router = createBrowserRouter([
@@ -16,7 +18,9 @@ const App = () => {
 
   return (
     <div className="w-screen h-screen">
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </div>
   );
 };

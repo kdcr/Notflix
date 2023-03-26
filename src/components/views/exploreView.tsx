@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import getPopularMovies from '../../api/getPopularMovies';
 import getPopularShows from '../../api/getPopularShows';
 import ShowDTO from '../../model/ShowDTO';
@@ -7,12 +9,17 @@ import Carrousel from '../molecular/Carrousel/Carrousel';
 import { mapMovies, mapShows } from '../../api/apiUtils';
 import TextSwitch from '../atomic/textSwitch/textSwitch';
 import MediaFormat from '../../model/enums/MediaFormat';
+import { RootState } from '../../redux/store';
+import { selectMediaFormat, selectShow } from '../../redux/showsSlice';
 
 const ExploreView = () => {
+  const navigate = useNavigate();
+
+  const selectedMedia = useSelector((state: RootState) => state.shows.selectedMediaFormat);
+  const dispatch = useDispatch();
+
   const [topShows, setTopShows] = useState<ShowDTO[]>([]);
   const [topMovies, setTopMovies] = useState<MovieDTO[]>([]);
-
-  const [selectedMedia, setSelectedMedia] = useState<MediaFormat>(MediaFormat.Movie);
 
   useEffect(() => {
     getPopularShows().then((request) => {
@@ -29,10 +36,19 @@ const ExploreView = () => {
   }, []);
 
   const handleMediaTypeChange = () =>
-    setSelectedMedia(selectedMedia === MediaFormat.Movie ? MediaFormat.TVSHow : MediaFormat.Movie);
+    dispatch(
+      selectMediaFormat({
+        format: selectedMedia === MediaFormat.Movie ? MediaFormat.TVSHow : MediaFormat.Movie,
+      }),
+    );
 
   const handleItemClick = (index: number) => {
-    // TODO: navigate to detail view
+    dispatch(
+      selectShow({
+        id: selectedMedia === MediaFormat.Movie ? topMovies[index].id : topShows[index].id,
+      }),
+    );
+    navigate('/detail');
   };
 
   return (
