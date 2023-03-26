@@ -14,7 +14,7 @@ const CarrouselItem = ({ item, className }: carrouselItemsProps) => (
       src={`${import.meta.env.VITE_IMAGE_BASE_URL}${item.imageUrl}`}
       alt={item.title || item.name}
     />
-    <span className="text-[32px] text-center min-h-[100px]">{item.title || item.name}</span>
+    <span className="text-[32px] text-center min-h-[10%]">{item.title || item.name}</span>
     <VoteAverage value={item.voteAverage * 10} />
   </div>
 );

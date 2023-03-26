@@ -27,6 +27,10 @@ const Carrousel = ({ items, className }: carrouselProps) => {
     if (scrolling !== 0) setScrollInterval(setInterval(doScroll, 10));
   }, [scrolling]);
 
+  useEffect(() => {
+    scrollContainerRef.current?.scroll(0, 0);
+  }, [items]);
+
   return (
     <div className={`flex flex-row ${className}`}>
       <button
@@ -40,11 +44,11 @@ const Carrousel = ({ items, className }: carrouselProps) => {
         <img src={chevronLeftIcon} alt="right" className="w-full" />
       </button>
       <div
-        className="flex flex-row overflow-x-scroll hide-scrollbar w-[80%]"
+        className="flex flex-row overflow-x-scroll hide-scrollbar scroll-smooth w-[80%] h-full"
         ref={scrollContainerRef}
       >
         {items.map((item) => (
-          <CarrouselItem item={item} className="mx-2 bg-slate-500 rounded p-2" />
+          <CarrouselItem item={item} className="p-2 mx-2 bg-gray-600 rounded !h-full" />
         ))}
       </div>
       <button
