@@ -23,7 +23,7 @@ const TextSwitch = ({ leftValue, rightValue, active, onChange }: textSwitchProps
     <button
       type="button"
       onClick={onChange}
-      className="bg-gray-600 px-4 py-2 rounded-full flex flex-row gap-4 border-2 border-gray-500 relative"
+      className="relative flex flex-row gap-4 px-4 py-2 bg-gray-600 border-2 border-gray-500 rounded-full"
     >
       <span className="z-10" ref={leftRef}>
         {leftValue}
@@ -32,11 +32,12 @@ const TextSwitch = ({ leftValue, rightValue, active, onChange }: textSwitchProps
         {rightValue}
       </span>
       <div
-        className="absolute bg-red-500 rounded-full h-10 top-0 z-0"
+        className="absolute top-0 left-0 z-0 h-10 transition-all duration-500 bg-red-500 rounded-full"
         style={{
           width: selectedWidth,
-          left: !active ? '0' : '',
-          right: active ? '0' : '',
+          transform: active
+            ? `translateX(calc(${leftRef.current?.clientWidth}px + 19px))`
+            : 'translateX(0)',
         }}
       />
     </button>
