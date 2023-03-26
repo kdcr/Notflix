@@ -6,13 +6,7 @@ import MovieDTO from '../../model/MovieDTO';
 import Carrousel from '../molecular/Carrousel/Carrousel';
 import { mapMovies, mapShows } from '../../api/apiUtils';
 import TextSwitch from '../atomic/textSwitch/textSwitch';
-
-//
-// eslint-disable-next-line no-shadow
-enum MediaFormat {
-  Movie,
-  TVSHow,
-}
+import MediaFormat from '../../model/enums/MediaFormat';
 
 const ExploreView = () => {
   const [topShows, setTopShows] = useState<ShowDTO[]>([]);

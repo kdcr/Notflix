@@ -1,6 +1,6 @@
 import MovieResponseDTO from './MovieResponseDTO';
 
-export default interface MoviesResponse {
+export default interface MoviesResponseBody {
   page: number;
   results: MovieResponseDTO[];
 }

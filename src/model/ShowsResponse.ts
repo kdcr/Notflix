@@ -1,6 +1,6 @@
 import ShowResponseDTO from './ShowResponseDTO';
 
-export default interface ShowsResponse {
+export default interface ShowsResponseBody {
   page: number;
   results: ShowResponseDTO[];
 }
