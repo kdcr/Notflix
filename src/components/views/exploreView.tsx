@@ -5,10 +5,20 @@ import ShowDTO from '../../model/ShowDTO';
 import MovieDTO from '../../model/MovieDTO';
 import Carrousel from '../molecular/Carrousel/Carrousel';
 import { mapMovies, mapShows } from '../../api/apiUtils';
+import TextSwitch from '../atomic/textSwitch/textSwitch';
+
+//
+// eslint-disable-next-line no-shadow
+enum MediaFormat {
+  Movie,
+  TVSHow,
+}
 
 const ExploreView = () => {
   const [topShows, setTopShows] = useState<ShowDTO[]>([]);
   const [topMovies, setTopMovies] = useState<MovieDTO[]>([]);
+
+  const [selectedMedia, setSelectedMedia] = useState<MediaFormat>(MediaFormat.Movie);
 
   useEffect(() => {
     getPopularShows().then((request) => {
@@ -24,17 +34,23 @@ const ExploreView = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(topMovies);
-  }, [topMovies]);
+  const handleMediaTypeChange = () =>
+    setSelectedMedia(selectedMedia === MediaFormat.Movie ? MediaFormat.TVSHow : MediaFormat.Movie);
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden">
-      <div className="h-[10%]">
-        <span>Explore</span>
-        <a href="/detail">Go to detail</a>
+      <div className="h-[10%] flex items-center">
+        <TextSwitch
+          leftValue="Movies"
+          rightValue="TV Shows"
+          active={selectedMedia === MediaFormat.TVSHow}
+          onChange={handleMediaTypeChange}
+        />
       </div>
-      <Carrousel items={topMovies} className="w-screen h-[90%]" />
+      <Carrousel
+        items={selectedMedia === MediaFormat.TVSHow ? topShows : topMovies}
+        className="w-screen h-[80%]"
+      />
     </div>
   );
 };
