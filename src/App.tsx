@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css';
 import DetailView from './components/views/detailView';
 import ExploreView from './components/views/exploreView';
 
@@ -16,7 +15,7 @@ const App = () => {
   ]);
 
   return (
-    <div className="App">
+    <div className="w-screen h-screen">
       <RouterProvider router={router} />
     </div>
   );

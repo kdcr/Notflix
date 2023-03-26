@@ -3,11 +3,12 @@ import StarYellowIcon from '../../../assets/star-yellow.svg';
 
 interface propsType {
   value: number;
-  stars: number;
+  stars?: number;
+  className?: string;
 }
 
-const VoteAverage = ({ value, stars = 5 }: propsType) => (
-  <div className="flex flex-row">
+const VoteAverage = ({ value, stars = 5, className }: propsType) => (
+  <div className={`flex flex-row h-[96px] ${className}`}>
     <div className="relative" style={{ width: `${stars * 96}px` }}>
       <div className="absolute inset-0 z-0 flex flex-row">
         {Array(stars)
@@ -32,5 +33,10 @@ const VoteAverage = ({ value, stars = 5 }: propsType) => (
     </div>
   </div>
 );
+
+VoteAverage.defaultProps = {
+  stars: 5,
+  className: '',
+};
 
 export default VoteAverage;
