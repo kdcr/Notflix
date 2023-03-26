@@ -37,6 +37,10 @@ const ExploreView = () => {
   const handleMediaTypeChange = () =>
     setSelectedMedia(selectedMedia === MediaFormat.Movie ? MediaFormat.TVSHow : MediaFormat.Movie);
 
+  const handleItemClick = (index: number) => {
+    // TODO: navigate to detail view
+  };
+
   return (
     <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden">
       <div className="h-[10%] flex items-center">
@@ -50,6 +54,7 @@ const ExploreView = () => {
       <Carrousel
         items={selectedMedia === MediaFormat.TVSHow ? topShows : topMovies}
         className="w-screen h-[80%]"
+        onClick={handleItemClick}
       />
     </div>
   );

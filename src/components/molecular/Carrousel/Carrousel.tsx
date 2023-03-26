@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, MouseEvent } from 'react';
 import MovieDTO from '../../../model/MovieDTO';
 import ShowDTO from '../../../model/ShowDTO';
 import CarrouselItem from '../../atomic/carrouselItem/CarrouselItem';
@@ -8,9 +8,10 @@ import chevronLeftIcon from '../../../assets/chevron-left.svg';
 interface carrouselProps {
   items: MovieDTO[] | ShowDTO[];
   className?: string;
+  onClick?: (index: number) => void;
 }
 
-const Carrousel = ({ items, className }: carrouselProps) => {
+const Carrousel = ({ items, className, onClick }: carrouselProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [scrolling, setScrolling] = useState<number>(0);
@@ -19,7 +20,16 @@ const Carrousel = ({ items, className }: carrouselProps) => {
 
   const doScroll = () => {
     const scroll = scrollContainerRef.current?.scrollLeft;
-    if (typeof scroll === 'number') scrollContainerRef.current?.scroll(scroll + 10 * scrolling, 0);
+    if (typeof scroll === 'number') scrollContainerRef.current?.scroll(scroll + 20 * scrolling, 0);
+  };
+
+  const handleGoTop = () => {
+    scrollContainerRef.current?.scroll(0, 0);
+  };
+
+  const handleClickScroll = (e: MouseEvent) => {
+    const { current } = scrollContainerRef;
+    if (e.buttons === 1) current?.scroll(current.scrollLeft - e.nativeEvent.movementX * 2, 0);
   };
 
   useEffect(() => {
@@ -32,27 +42,33 @@ const Carrousel = ({ items, className }: carrouselProps) => {
   }, [items]);
 
   return (
-    <div className={`flex flex-row ${className}`}>
+    <div className={`flex flex-row items-center justify-center ${className}`}>
       <button
-        className="w-[10%] select-none"
+        className="w-[10%] select-none hidden lg:block"
         onMouseDown={() => setScrolling(-1)}
         onMouseUp={() => setScrolling(0)}
         onMouseLeave={() => setScrolling(0)}
         onKeyDown={() => setScrolling(0)}
+        onDoubleClick={handleGoTop}
         type="button"
       >
         <img src={chevronLeftIcon} alt="right" className="w-full" />
       </button>
       <div
-        className="flex flex-row overflow-x-scroll hide-scrollbar scroll-smooth w-[80%] h-full"
+        className="flex flex-col lg:flex-row overflow-x-scroll hide-scrollbar scroll-smooth w-[80%] h-full gap-2 select-none"
+        onMouseMove={(e) => handleClickScroll(e)}
         ref={scrollContainerRef}
       >
-        {items.map((item) => (
-          <CarrouselItem item={item} className="p-2 mx-2 bg-gray-600 rounded !h-full" />
+        {items.map((item, index) => (
+          <CarrouselItem
+            item={item}
+            className="p-2 bg-gray-600 rounded !h-full"
+            onClick={() => onClick?.(index)}
+          />
         ))}
       </div>
       <button
-        className="w-[10%] select-none"
+        className="w-[10%] select-none hidden lg:block"
         onMouseDown={() => setScrolling(1)}
         onMouseUp={() => setScrolling(0)}
         onMouseLeave={() => setScrolling(0)}
@@ -67,6 +83,7 @@ const Carrousel = ({ items, className }: carrouselProps) => {
 
 Carrousel.defaultProps = {
   className: '',
+  onClick: () => null,
 };
 
 export default Carrousel;
