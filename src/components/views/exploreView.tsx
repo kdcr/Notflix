@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import getPopularMovies from '../../api/getPopularMovies';
 import getPopularShows from '../../api/getPopularShows';
 import ShowDTO from '../../model/ShowDTO';
@@ -18,22 +19,8 @@ const ExploreView = () => {
   const selectedMedia = useSelector((state: RootState) => state.shows.selectedMediaFormat);
   const dispatch = useDispatch();
 
-  const [topShows, setTopShows] = useState<ShowDTO[]>([]);
-  const [topMovies, setTopMovies] = useState<MovieDTO[]>([]);
-
-  useEffect(() => {
-    getPopularShows().then((request) => {
-      if (request?.status === 200) {
-        setTopShows(mapShows(request.data.results));
-      }
-    });
-
-    getPopularMovies().then((request) => {
-      if (request?.status === 200) {
-        setTopMovies(mapMovies(request.data.results));
-      }
-    });
-  }, []);
+  const showsQuery = useQuery('shows', getPopularShows);
+  const moviesQuery = useQuery('movies', getPopularMovies);
 
   const handleMediaTypeChange = () =>
     dispatch(
@@ -43,12 +30,20 @@ const ExploreView = () => {
     );
 
   const handleItemClick = (index: number) => {
-    dispatch(
-      selectShow({
-        id: selectedMedia === MediaFormat.Movie ? topMovies[index].id : topShows[index].id,
-      }),
-    );
-    navigate('/detail');
+    if (
+      (selectedMedia === MediaFormat.TVSHow && showsQuery.isSuccess) ||
+      (selectedMedia === MediaFormat.Movie && moviesQuery.isSuccess)
+    ) {
+      dispatch(
+        selectShow({
+          id:
+            selectedMedia === MediaFormat.Movie
+              ? moviesQuery.data![index].id
+              : showsQuery.data![index].id,
+        }),
+      );
+      navigate('/detail');
+    }
   };
 
   return (
@@ -61,11 +56,14 @@ const ExploreView = () => {
           onChange={handleMediaTypeChange}
         />
       </div>
-      <Carrousel
-        items={selectedMedia === MediaFormat.TVSHow ? topShows : topMovies}
-        className="w-screen h-[80%]"
-        onClick={handleItemClick}
-      />
+      {(selectedMedia === MediaFormat.TVSHow && showsQuery.isSuccess) ||
+      (selectedMedia === MediaFormat.Movie && moviesQuery.isSuccess) ? (
+        <Carrousel
+          items={selectedMedia === MediaFormat.TVSHow ? showsQuery.data! : moviesQuery.data!}
+          className="w-screen h-[80%]"
+          onClick={handleItemClick}
+        />
+      ) : null}
     </div>
   );
 };
