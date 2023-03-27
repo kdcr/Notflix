@@ -70,6 +70,7 @@ const Carrousel = ({ items, className, onClick }: carrouselProps) => {
       >
         {items.map((item, index) => (
           <CarrouselItem
+            key={item.id}
             item={item}
             className="p-2 bg-gray-600 rounded !h-full"
             onMouseUp={() => handleClick(index)}

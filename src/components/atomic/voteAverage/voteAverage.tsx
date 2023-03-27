@@ -11,23 +11,19 @@ const VoteAverage = ({ value, stars = 5, className }: propsType) => (
   <div className={`flex flex-row h-[96px] ${className}`}>
     <div className="relative" style={{ width: `${stars * 96}px` }}>
       <div className="absolute inset-0 z-0 flex flex-row">
-        {Array(stars)
-          .fill(0)
-          .map(() => (
-            <div className="w-24 h-24">
-              <img src={StarIcon} alt="star" />
-            </div>
-          ))}
+        {Array.from(Array(stars).keys()).map((star) => (
+          <div className="w-24 h-24" key={`vote-${star}-${new Date().getTime()}`}>
+            <img src={StarIcon} alt="star" />
+          </div>
+        ))}
       </div>
       <div className="absolute inset-0 z-10 h-24 overflow-hidden" style={{ width: `${value}%` }}>
         <div style={{ width: `${96 * stars}px` }} className="flex flex-row h-24">
-          {Array(stars)
-            .fill(0)
-            .map(() => (
-              <div className="w-24 h-24">
-                <img src={StarYellowIcon} alt="star" />
-              </div>
-            ))}
+          {Array.from(Array(stars).keys()).map((star: number) => (
+            <div className="w-24 h-24" key={`vote-${star}-${new Date().getTime()}`}>
+              <img src={StarYellowIcon} alt="star" />
+            </div>
+          ))}
         </div>
       </div>
     </div>
