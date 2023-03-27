@@ -19,8 +19,8 @@ const ExploreView = () => {
   const selectedMedia = useSelector((state: RootState) => state.shows.selectedMediaFormat);
   const dispatch = useDispatch();
 
-  const showsQuery = useQuery('shows', getPopularShows);
-  const moviesQuery = useQuery('movies', getPopularMovies);
+  const showsQuery = useQuery('shows', getPopularShows, { staleTime: 5 * 1000 * 60 });
+  const moviesQuery = useQuery('movies', getPopularMovies, { staleTime: 5 * 1000 * 60 });
 
   const handleMediaTypeChange = () =>
     dispatch(
