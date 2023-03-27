@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import showsReducer from './showsSlice';
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
     shows: showsReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
