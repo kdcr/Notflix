@@ -1,3 +1,4 @@
+import { getImageUrl } from '../../../api/apiUtils';
 import MovieDTO from '../../../model/MovieDTO';
 import ShowDTO from '../../../model/ShowDTO';
 import VoteAverage from '../voteAverage/voteAverage';
@@ -16,7 +17,7 @@ const CarrouselItem = ({ item, className, onMouseUp }: carrouselItemsProps) => (
   >
     <img
       className="h-[70%] cursor-pointer"
-      src={`${import.meta.env.VITE_IMAGE_BASE_URL}${item.imageUrl}`}
+      src={getImageUrl(item.imageUrl)}
       alt={item.title || item.name}
       draggable="false"
     />
