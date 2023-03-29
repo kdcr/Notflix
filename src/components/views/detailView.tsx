@@ -60,7 +60,7 @@ const DetailView = () => {
         </Button>
       </div>
       {detailQuery.isSuccess && (
-        <div className="h-full lg:h-[70%] flex flex-col lg:text-left text-center lg:overflow-hidden lg:grid lg:grid-cols-2 lg:grid-rows-4 w-full items-start justify-center p-2">
+        <div className="h-full lg:h-[70%] flex flex-col lg:text-left text-center lg:overflow-hidden lg:grid lg:grid-cols-2 lg:grid-rows-4 w-full items-center lg:items-start justify-center p-2">
           <div className="h-[300px] lg:h-full col-start-1 row-span-4 flex justify-center">
             <img
               className="h-[300px] lg:h-full"
