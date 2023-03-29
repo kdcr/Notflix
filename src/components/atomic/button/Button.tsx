@@ -1,7 +1,7 @@
 interface ButtonProps {
   onClick: () => void;
   children: JSX.Element;
-  className: string;
+  className?: string;
 }
 
 const Button = ({ onClick, children, className }: ButtonProps) => (
@@ -13,5 +13,9 @@ const Button = ({ onClick, children, className }: ButtonProps) => (
     <div className="flex items-center justify-center w-full h-full">{children}</div>
   </button>
 );
+
+Button.defaultProps = {
+  className: '',
+};
 
 export default Button;
