@@ -4,7 +4,7 @@ import ShowDTO from '../../../model/ShowDTO';
 import CarrouselItem from '../../atomic/carrouselItem/CarrouselItem';
 import chevronRightIcon from '../../../assets/chevron-right.svg';
 import chevronLeftIcon from '../../../assets/chevron-left.svg';
-import ShowPoster from '../../atomic/showPoster/ShowPoster';
+import ShowPoster from '../../atomic/showPoster/showPoster';
 
 interface carrouselProps {
   items: MovieDTO[] | ShowDTO[];
