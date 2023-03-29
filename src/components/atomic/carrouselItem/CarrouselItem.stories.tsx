@@ -21,5 +21,7 @@ Primary.args = {
     voteAverage: 5,
     title: 'Shazam! Fury of the Gods',
     imageUrl: 'https://image.tmdb.org/t/p/w500/A3ZbZsmsvNGdprRi2lKgGEeVLEH.jpg',
+    genres: [],
+    overview: '',
   },
 };

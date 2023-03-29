@@ -2,7 +2,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import ShowPoster from './ShowPoster';
+import ShowPoster from './showPoster';
 
 export default {
   title: 'Atomic/ShowPoster',
