@@ -4,14 +4,16 @@ import ShowDTO from '../../../model/ShowDTO';
 import CarrouselItem from '../../atomic/carrouselItem/CarrouselItem';
 import chevronRightIcon from '../../../assets/chevron-right.svg';
 import chevronLeftIcon from '../../../assets/chevron-left.svg';
+import ShowPoster from '../../atomic/showPoster/ShowPoster';
 
 interface carrouselProps {
   items: MovieDTO[] | ShowDTO[];
   className?: string;
   onClick?: (index: number) => void;
+  size: 'small' | 'large';
 }
 
-const Carrousel = ({ items, className, onClick }: carrouselProps) => {
+const Carrousel = ({ items, className, onClick, size }: carrouselProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [buttonScrolling, setButtonScrolling] = useState<number>(0);
@@ -68,14 +70,23 @@ const Carrousel = ({ items, className, onClick }: carrouselProps) => {
         onMouseMove={(e) => handleHandScroll(e)}
         ref={scrollContainerRef}
       >
-        {items.map((item, index) => (
-          <CarrouselItem
-            key={item.id}
-            item={item}
-            className="p-2 bg-gray-600 rounded !h-full"
-            onMouseUp={() => handleClick(index)}
-          />
-        ))}
+        {size === 'large'
+          ? items.map((item) => (
+              <CarrouselItem
+                key={item.id}
+                item={item}
+                className="p-2 bg-gray-600 rounded !h-full"
+                onMouseUp={() => handleClick(item.id)}
+              />
+            ))
+          : items.map((item) => (
+              <ShowPoster
+                key={item.id}
+                item={item}
+                className="p-2 bg-gray-600 rounded min-h-[200px] lg:!h-full lg:min-w-[180px]"
+                onMouseUp={() => handleClick(item.id)}
+              />
+            ))}
       </div>
       <button
         className="w-[10%] select-none hidden lg:block"

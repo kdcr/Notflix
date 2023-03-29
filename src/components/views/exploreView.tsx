@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import getPopularMovies from '../../api/getPopularMovies';
 import getPopularShows from '../../api/getPopularShows';
-import ShowDTO from '../../model/ShowDTO';
-import MovieDTO from '../../model/MovieDTO';
 import Carrousel from '../molecular/Carrousel/Carrousel';
-import { mapMovies, mapShows } from '../../api/apiUtils';
 import TextSwitch from '../atomic/textSwitch/textSwitch';
 import MediaFormat from '../../model/enums/MediaFormat';
 import { RootState } from '../../redux/store';
@@ -29,21 +25,13 @@ const ExploreView = () => {
       }),
     );
 
-  const handleItemClick = (index: number) => {
-    if (
-      (selectedMedia === MediaFormat.TVSHow && showsQuery.isSuccess) ||
-      (selectedMedia === MediaFormat.Movie && moviesQuery.isSuccess)
-    ) {
-      dispatch(
-        selectShow({
-          id:
-            selectedMedia === MediaFormat.Movie
-              ? moviesQuery.data![index].id
-              : showsQuery.data![index].id,
-        }),
-      );
-      navigate('/detail');
-    }
+  const handleItemClick = (id: number) => {
+    dispatch(
+      selectShow({
+        id,
+      }),
+    );
+    navigate('/detail');
   };
 
   return (
@@ -59,6 +47,7 @@ const ExploreView = () => {
       {(selectedMedia === MediaFormat.TVSHow && showsQuery.isSuccess) ||
       (selectedMedia === MediaFormat.Movie && moviesQuery.isSuccess) ? (
         <Carrousel
+          size="large"
           items={selectedMedia === MediaFormat.TVSHow ? showsQuery.data! : moviesQuery.data!}
           className="w-screen h-[80%]"
           onClick={handleItemClick}
