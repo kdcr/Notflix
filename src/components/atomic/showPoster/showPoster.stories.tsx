@@ -2,7 +2,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import ShowPoster from './showPoster';
+import ShowPoster from './ShowPoster';
 
 export default {
   title: 'Atomic/ShowPoster',
@@ -18,6 +18,12 @@ const Template: ComponentStory<typeof ShowPoster> = (args) => <ShowPoster {...ar
 
 export const Primary = Template.bind({});
 Primary.args = {
-  title: 'Shazam! Fury of the Gods',
-  imageUrl: 'https://image.tmdb.org/t/p/w500/A3ZbZsmsvNGdprRi2lKgGEeVLEH.jpg',
+  item: {
+    id: 1,
+    title: 'Shazam! Fury of the Gods',
+    imageUrl: '/A3ZbZsmsvNGdprRi2lKgGEeVLEH.jpg',
+    overview: '',
+    voteAverage: 5,
+    genres: [],
+  },
 };
